@@ -1,0 +1,38 @@
+pipeline {
+    agent any
+    tools {
+        terraform 'terraform'
+        git 'git'
+    }
+    stages {
+      stage('Checkout - GitHub ') {
+        steps {
+          git branch: 'main', credentialsId: 'passjenkins', url: 'https://github.com/kingsonrisaa/terraform.git'
+        }
+      }
+      
+      stage('Terraform Init - DevSecOps') {
+        steps {
+          withCredentials([[$class: 'AmazonWebServicesCredentialsBinding', credentialsId: 'awsuserdevops', accessKeyVariable: 'AWS_ACCESS_KEY_ID', secretKeyVariable: 'AWS_SECRET_ACCESS_KEY']]) {
+            sh 'terraform init'
+          }
+        }
+      }
+      
+      stage('Terraform Plan - DevSecOps') {
+        steps {
+          withCredentials([[$class: 'AmazonWebServicesCredentialsBinding', credentialsId: 'awsuserdevops', accessKeyVariable: 'AWS_ACCESS_KEY_ID', secretKeyVariable: 'AWS_SECRET_ACCESS_KEY']]) {
+            sh 'terraform plan -out=tfplan -var-file="variables.tfvars"'
+          }
+        }
+      }
+      
+      stage('Terraform Apply - DevSecOps') {
+        steps {
+          withCredentials([[$class: 'AmazonWebServicesCredentialsBinding', credentialsId: 'awsuserdevops', accessKeyVariable: 'AWS_ACCESS_KEY_ID', secretKeyVariable: 'AWS_SECRET_ACCESS_KEY']]) {
+            sh 'terraform apply -var-file="variables.tfvars" -auto-approve'
+          }
+        }
+      }
+    }
+  }
