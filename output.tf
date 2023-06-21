@@ -1,3 +1,3 @@
-output "output-vpc-passion-aws-useast1" {
+output "output-vpc-passion-AWS-useast1" {
   value = aws_vpc.vpc-passion
 }
