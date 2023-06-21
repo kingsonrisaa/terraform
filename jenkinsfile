@@ -11,7 +11,7 @@ pipeline {
         }
       }
       
-      stage('Terraform Init - DevSecOps') {
+      stage('Terraform Init') {
         steps {
           withCredentials([[$class: 'AmazonWebServicesCredentialsBinding', credentialsId: 'awsuserdevops', accessKeyVariable: 'AWS_ACCESS_KEY_ID', secretKeyVariable: 'AWS_SECRET_ACCESS_KEY']]) {
             sh 'terraform init'
@@ -19,7 +19,7 @@ pipeline {
         }
       }
       
-      stage('Terraform Plan - DevSecOps') {
+      stage('Terraform Plan') {
         steps {
           withCredentials([[$class: 'AmazonWebServicesCredentialsBinding', credentialsId: 'awsuserdevops', accessKeyVariable: 'AWS_ACCESS_KEY_ID', secretKeyVariable: 'AWS_SECRET_ACCESS_KEY']]) {
             sh 'terraform plan -out=tfplan -var-file="variables.tfvars"'
@@ -27,7 +27,7 @@ pipeline {
         }
       }
       
-      stage('Terraform Apply - DevSecOps') {
+      stage('Terraform Apply - Terraform Apply - Creating 3 VPC...') {
         steps {
           withCredentials([[$class: 'AmazonWebServicesCredentialsBinding', credentialsId: 'awsuserdevops', accessKeyVariable: 'AWS_ACCESS_KEY_ID', secretKeyVariable: 'AWS_SECRET_ACCESS_KEY']]) {
             sh 'terraform apply -var-file="variables.tfvars" -auto-approve'

@@ -1,3 +1,3 @@
-output "output-cidr-vpc-passion" {
+output "output-vpc-passion" {
   value = aws_vpc.vpc-passion
 }
