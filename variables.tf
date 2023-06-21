@@ -1,4 +1,4 @@
-#variables
+#variables aws
 variable "aws_region" {
   type = string
   description = "Region"
