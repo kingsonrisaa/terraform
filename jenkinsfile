@@ -1,0 +1,39 @@
+pipeline {
+    agent any
+    tools {
+        terraform 'terraform'
+        git 'git'
+    }
+    stages {
+      stage('Checkout - GitHub ') {
+        steps {
+          git branch: 'main', credentialsId: '<id credential of jenkins>', url: 'https://github.com/<you repository>'
+        }
+      }
+      
+      stage('Terraform Init ') {
+        steps {
+          withCredentials([[$class: 'AmazonWebServicesCredentialsBinding', credentialsId: '<id crendital of AWS>', accessKeyVariable: 'AWS_ACCESS_KEY_ID', secretKeyVariable: 'AWS_SECRET_ACCESS_KEY']]) {
+            sh 'terraform init'
+          }
+        }
+      }
+      
+      stage('Terraform Plan') {
+        steps {
+          withCredentials([[$class: 'AmazonWebServicesCredentialsBinding', credentialsId: '<id crendital of AWS>', accessKeyVariable: 'AWS_ACCESS_KEY_ID', secretKeyVariable: 'AWS_SECRET_ACCESS_KEY']]) {
+            sh 'terraform plan  -var-file="variables.tfvars"'
+          }
+        }
+      }
+      
+      stage('Terraform Apply - Creating 3 VPC...') {
+        steps {
+          withCredentials([[$class: 'AmazonWebServicesCredentialsBinding', credentialsId: '<id crendital of AWS>', accessKeyVariable: 'AWS_ACCESS_KEY_ID', secretKeyVariable: 'AWS_SECRET_ACCESS_KEY']]) {
+            sh 'terraform apply -var-file="variables.tfvars" -auto-approve'
+          }
+        }
+      }
+    }
+  }
+  
