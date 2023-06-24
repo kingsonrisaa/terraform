@@ -1,6 +1,6 @@
 terraform {
   cloud {
-    organization = "it-passion-forever-01"
+    organization = "<You name organization>"
 
     workspaces {
       name = "lab-local-execution"
