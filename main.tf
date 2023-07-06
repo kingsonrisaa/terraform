@@ -24,7 +24,9 @@ resource "aws_s3_bucket_policy" "bucket-policy-terraform" {
     "Statement": [
     {
       "Effect": "Allow",
-      "Principal": "*",
+      "Principal": {
+                "AWS": "arn:aws:iam::743512395119:user/User_Terraform"
+            },
       "Action": "s3:ListBucket",
       "Resource": [ "arn:aws:s3:::${aws_s3_bucket.terraformstate.id}",
         "arn:aws:s3:::${aws_s3_bucket.terraformstate.id}/*"
@@ -32,7 +34,9 @@ resource "aws_s3_bucket_policy" "bucket-policy-terraform" {
     },
     {
       "Effect": "Allow",
-      "Principal": "*",
+      "Principal": {
+                "AWS": "arn:aws:iam::743512395119:user/User_Terraform"
+            },
       "Action": ["s3:GetObject", "s3:PutObject", "s3:DeleteObject"],
       "Resource": [ "arn:aws:s3:::${aws_s3_bucket.terraformstate.id}",
         "arn:aws:s3:::${aws_s3_bucket.terraformstate.id}/*"
