@@ -1,6 +1,6 @@
 #create resource
 resource "aws_s3_bucket" "terraformstate" {
-  bucket = "my-tf-state-test-bucket"
+  bucket = "mytfstatetestbucket020202"
   tags = {
     Name        = "My bucket"
     Environment = "Dev"
