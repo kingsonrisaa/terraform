@@ -52,9 +52,9 @@ EOF
 resource "aws_dynamodb_table" "statelock-dynamodb" {
   name = "statelock-dynamodb"
   billing_mode = "PAY_PER_REQUEST"
-  hash_key = "tflockid"
+  hash_key = "LockID"
   attribute {
-    name = "tflockid"
+    name = "LockID"
     type = "S"
   }
 }
