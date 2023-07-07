@@ -25,7 +25,7 @@ resource "aws_s3_bucket_policy" "bucket-policy-terraform" {
     {
       "Effect": "Allow",
       "Principal": {
-                "AWS": "<ARN USER IAM>"
+                "AWS": "${var.arnusername}"
             },
       "Action": "s3:ListBucket",
       "Resource": [ "arn:aws:s3:::${aws_s3_bucket.terraformstate.id}",
